@@ -34,58 +34,60 @@ class HomeView extends StatelessWidget {
           ),
           body: LayoutBuilder(
             builder: (context, constraint) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: homeBloc.users.isEmpty && state is LoadingState
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : NotificationListener<ScrollNotification>(
-                        onNotification: (ScrollNotification scrollInfo) {
-                          if (scrollInfo.metrics.pixels ==
-                              scrollInfo.metrics.maxScrollExtent) {
-                            if (!homeBloc.isLoading &&
-                                homeBloc.users.length < 100 &&
-                                state is! LoadingState) {
-                              homeBloc.isLoading = true;
-                              homeBloc.add(
-                                FetchUsersFromApi(
-                                    (homeBloc.users.length ~/ 10) + 1, context),
-                              );
+              return SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: homeBloc.users.isEmpty && state is LoadingState
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : NotificationListener<ScrollNotification>(
+                          onNotification: (ScrollNotification scrollInfo) {
+                            if (scrollInfo.metrics.pixels ==
+                                scrollInfo.metrics.maxScrollExtent) {
+                              if (!homeBloc.isLoading &&
+                                  homeBloc.users.length < 100 &&
+                                  state is! LoadingState) {
+                                homeBloc.isLoading = true;
+                                homeBloc.add(
+                                  FetchUsersFromApi(
+                                      (homeBloc.users.length ~/ 10) + 1, context),
+                                );
+                              }
                             }
-                          }
-                          return false;
-                        },
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: ListView.separated(
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () =>
-                                        Navigator.of(context).pushNamed(
-                                      HomeDetailView.routeName,
-                                      arguments: homeBloc.users[index],
-                                    ),
-                                    child: HomeListItemWidget(
-                                        userData: homeBloc.users[index],
-                                        screenSize: _screenSize),
-                                  );
-                                },
-                                separatorBuilder: (context, index) =>
-                                    const Divider(),
-                                itemCount: homeBloc.users.length,
+                            return false;
+                          },
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () =>
+                                          Navigator.of(context).pushNamed(
+                                        HomeDetailView.routeName,
+                                        arguments: homeBloc.users[index],
+                                      ),
+                                      child: HomeListItemWidget(
+                                          userData: homeBloc.users[index],
+                                          screenSize: _screenSize),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) =>
+                                      const Divider(),
+                                  itemCount: homeBloc.users.length,
+                                ),
                               ),
-                            ),
-                            if (homeBloc.users.isNotEmpty &&
-                                state is LoadingState)
-                              const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator())
-                          ],
+                              if (homeBloc.users.isNotEmpty &&
+                                  state is LoadingState)
+                                const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator())
+                            ],
+                          ),
                         ),
-                      ),
+                ),
               );
             },
           ),

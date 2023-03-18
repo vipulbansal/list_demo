@@ -42,103 +42,105 @@ class HomeDetailView extends StatelessWidget {
             ),
             body: LayoutBuilder(builder: (context, constraint) {
               return state is HomeDetailsInitial
-                  ? Padding(
-                      padding: const EdgeInsets.all(
-                        16.0,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: _screenSize.height * 0.05,
-                          ),
-                          CachedNetworkImage(
-                            imageUrl: "${state.userData.picture?.large}",
-                            fit: BoxFit.cover,
-                            width: _screenSize.width * 0.5,
-                            height: _screenSize.height * 0.3,
-                            placeholder: (context, url) => SvgPicture.asset(
-                              StandardAssetImage.placeholder,
+                  ? SafeArea(
+                    child: Padding(
+                        padding: const EdgeInsets.all(
+                          16.0,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: _screenSize.height * 0.05,
                             ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            decoration:
-                                const BoxDecoration(color: StandardColor.black),
-                            width: double.infinity,
-                            height: 5,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          buildTextRow(
-                            context,
-                            "Email",
-                            "${state.userData.email}",
-                          ),
-                          buildTextRow(
-                            context,
-                            "Date Joined",
-                            Common.convertDateToRequiredFormat(
-                                from: DateFormat("yy-M-d"),
-                                to: DateFormat("dd-MMMM-yy"),
-                                date: "${state.userData.registered?.date}"),
-                          ),
-                          buildTextRow(
-                            context,
-                            "DOB",
-                            Common.convertDateToRequiredFormat(
-                                from: DateFormat("yy-M-d"),
-                                to: DateFormat("dd-MMMM-yyyy"),
-                                date: "${state.userData.dob?.date}"),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            "LOCATION:",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontSize: 20),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10.0,
+                            CachedNetworkImage(
+                              imageUrl: "${state.userData.picture?.large}",
+                              fit: BoxFit.cover,
+                              width: _screenSize.width * 0.5,
+                              height: _screenSize.height * 0.3,
+                              placeholder: (context, url) => SvgPicture.asset(
+                                StandardAssetImage.placeholder,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  color: StandardColor.black),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              decoration:
+                                  const BoxDecoration(color: StandardColor.black),
                               width: double.infinity,
                               height: 5,
                             ),
-                          ),
-                          buildTextRow(
-                            context,
-                            "City",
-                            "${state.userData.location?.city}",
-                          ),
-                          buildTextRow(
-                            context,
-                            "State",
-                            "${state.userData.location?.state}",
-                          ),
-                          buildTextRow(
-                            context,
-                            "Country",
-                            "${state.userData.location?.country}",
-                          ),
-                          buildTextRow(
-                            context,
-                            "Postcode",
-                            "${state.userData.location?.postcode}",
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            buildTextRow(
+                              context,
+                              "Email",
+                              "${state.userData.email}",
+                            ),
+                            buildTextRow(
+                              context,
+                              "Date Joined",
+                              Common.convertDateToRequiredFormat(
+                                  from: DateFormat("yy-M-d"),
+                                  to: DateFormat("dd-MMMM-yy"),
+                                  date: "${state.userData.registered?.date}"),
+                            ),
+                            buildTextRow(
+                              context,
+                              "DOB",
+                              Common.convertDateToRequiredFormat(
+                                  from: DateFormat("yy-M-d"),
+                                  to: DateFormat("dd-MMMM-yyyy"),
+                                  date: "${state.userData.dob?.date}"),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              "LOCATION:",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(fontSize: 20),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                              ),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    color: StandardColor.black),
+                                width: double.infinity,
+                                height: 5,
+                              ),
+                            ),
+                            buildTextRow(
+                              context,
+                              "City",
+                              "${state.userData.location?.city}",
+                            ),
+                            buildTextRow(
+                              context,
+                              "State",
+                              "${state.userData.location?.state}",
+                            ),
+                            buildTextRow(
+                              context,
+                              "Country",
+                              "${state.userData.location?.country}",
+                            ),
+                            buildTextRow(
+                              context,
+                              "Postcode",
+                              "${state.userData.location?.postcode}",
+                            ),
+                          ],
+                        ),
                       ),
-                    )
+                  )
                   : Container();
             }),
           );
